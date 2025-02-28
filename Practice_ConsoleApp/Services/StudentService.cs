@@ -91,14 +91,6 @@ namespace ConsoleApp.Services
                 {"@has_passed", has_passed}
             };
 
-            Console.WriteLine(parameter["@Id"]);
-            Console.WriteLine(parameter["@First_Name"]);
-            Console.WriteLine(parameter["@Last_Name"]);
-            Console.WriteLine(parameter["@Email"]);
-            Console.WriteLine(parameter["@Address"]);
-            Console.WriteLine(parameter["@Mobile"]);
-            Console.WriteLine(parameter["@has_passed"]);
-
             try{
                 // Console.WriteLine("Hi");
                 _executeStroedProcedure.CallStoredProcedure("ConsoleApp.upsert_student", parameter);
