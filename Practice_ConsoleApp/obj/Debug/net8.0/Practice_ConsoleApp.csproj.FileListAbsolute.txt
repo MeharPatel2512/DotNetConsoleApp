@@ -63,3 +63,4 @@ C:\Users\Mehar.Patel\OneDrive - SRKay Consulting Group\Documents\Mehar_Patel\dot
 C:\Users\Mehar.Patel\OneDrive - SRKay Consulting Group\Documents\Mehar_Patel\dotnet\Sir_task\Practice_ConsoleApp\obj\Debug\net8.0\Practice_ConsoleApp.genruntimeconfig.cache
 C:\Users\Mehar.Patel\OneDrive - SRKay Consulting Group\Documents\Mehar_Patel\dotnet\Sir_task\Practice_ConsoleApp\obj\Debug\net8.0\ref\Practice_ConsoleApp.dll
 C:\Users\Mehar.Patel\OneDrive - SRKay Consulting Group\Documents\Mehar_Patel\dotnet\Sir_task\Practice_ConsoleApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Mehar.Patel\OneDrive - SRKay Consulting Group\Documents\Mehar_Patel\dotnet\Sir_task\Practice_ConsoleApp\obj\Debug\net8.0\Practice_ConsoleApp.sourcelink.json

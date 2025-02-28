@@ -68,6 +68,7 @@ class Program{
                         String ?new_mobile = Console.ReadLine();
                         Console.WriteLine("Has student already passed ? (y/n) : ");
                         bool new_has_passed = Console.ReadLine() == "y";
+                        Console.ReadLine();
 
                         _studentrepository.UpsertStudent(new_id, new_first_name, new_last_name, new_email, new_address, new_mobile, new_has_passed);
                         break;

@@ -15,13 +15,13 @@ namespace ConsoleApp.Services
                     sqlCommand.CommandText = StoredProcedure;
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Connection = sqlConnection;
-                    sqlCommand.ExecuteNonQuery();
                     if(Parameters != null){
                         foreach (var para in Parameters)
                         {
                             sqlCommand.Parameters.AddWithValue(para.Key, para.Value?? DBNull.Value);
                         }
                     }
+                    // sqlCommand.ExecuteNonQuery();
 
                     SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
                     DataSet ds = new DataSet();

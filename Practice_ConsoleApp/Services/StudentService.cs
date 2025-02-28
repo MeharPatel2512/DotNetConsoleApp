@@ -1,6 +1,7 @@
 using System.Data;
 using ConsoleApp.Models;
 using ConsoleApp.Repositories;
+using Microsoft.Data.SqlClient;
 
 namespace ConsoleApp.Services
 {
@@ -29,17 +30,19 @@ namespace ConsoleApp.Services
                         row.Table.Columns.Contains("Mobile") ? row.Field<String>("Mobile") : null,
                         row.Table.Columns.Contains("has_passed") && row.Field<bool>("has_passed")
                     ));
-                }
-            
-                foreach (var student in resultList){
-                    Console.WriteLine($"Id : {student.Id}");
-                    Console.WriteLine($"First Name : {student.First_Name}");
-                    Console.WriteLine($"Last Name : {student.Last_Name}");
-                    Console.WriteLine($"Email : {student.Email}");
-                    Console.WriteLine($"Mobile : {student.Mobile}");
-                    Console.WriteLine($"Address : {student.Address}");
-                    Console.WriteLine($"Has already passed? : {student.has_passed}");
-                }
+                    }
+                    foreach (var student in resultList){
+                        Console.WriteLine($"Id : {student.Id}");
+                        Console.WriteLine($"First Name : {student.First_Name}");
+                        Console.WriteLine($"Last Name : {student.Last_Name}");
+                        Console.WriteLine($"Email : {student.Email}");
+                        Console.WriteLine($"Mobile : {student.Mobile}");
+                        Console.WriteLine($"Address : {student.Address}");
+                        Console.WriteLine($"Has already passed? : {student.has_passed}");
+                    }
+            }
+            else{
+                Console.WriteLine("No Data Found!!");
             }
         }
         public void GetOneStudent(int Id){
@@ -63,14 +66,17 @@ namespace ConsoleApp.Services
                     student.Address = dt.Field<String>("Address");
                     student.Mobile = dt.Field<String>("Mobile");
                     student.has_passed = dt.Field<bool>("has_passed");
+                Console.WriteLine($"Id : {student.Id}");
+                Console.WriteLine($"First Name : {student.First_Name}");
+                Console.WriteLine($"Last Name : {student.Last_Name}");
+                Console.WriteLine($"Email : {student.Email}");
+                Console.WriteLine($"Mobile : {student.Mobile}");
+                Console.WriteLine($"Address : {student.Address}");
+                Console.WriteLine($"Has already passed? : {student.has_passed}");
             }            
-            Console.WriteLine($"Id : {student.Id}");
-            Console.WriteLine($"First Name : {student.First_Name}");
-            Console.WriteLine($"Last Name : {student.Last_Name}");
-            Console.WriteLine($"Email : {student.Email}");
-            Console.WriteLine($"Mobile : {student.Mobile}");
-            Console.WriteLine($"Address : {student.Address}");
-            Console.WriteLine($"Has already passed? : {student.has_passed}");
+            else{
+                Console.WriteLine("No data found with that Id!");
+            }
         }
 
         public void UpsertStudent(int Id, String ?First_Name, String? Last_Name, String ?Email, String ?Address, String? Mobile, bool has_passed){
@@ -85,12 +91,26 @@ namespace ConsoleApp.Services
                 {"@has_passed", has_passed}
             };
 
+            Console.WriteLine(parameter["@Id"]);
+            Console.WriteLine(parameter["@First_Name"]);
+            Console.WriteLine(parameter["@Last_Name"]);
+            Console.WriteLine(parameter["@Email"]);
+            Console.WriteLine(parameter["@Address"]);
+            Console.WriteLine(parameter["@Mobile"]);
+            Console.WriteLine(parameter["@has_passed"]);
+
             try{
-                var dataset = _executeStroedProcedure.CallStoredProcedure("ConsoleApp.upsert_student", parameter);
-                Console.WriteLine("Student Inserted Successfully!!");
+                // Console.WriteLine("Hi");
+                _executeStroedProcedure.CallStoredProcedure("ConsoleApp.upsert_student", parameter);
             }
-            catch(System.Exception){
-                throw;
+            catch(SqlException sqlex){
+                throw new Exception("Something wrong with the SQL connection!!" + sqlex);
+            }
+            catch(Exception exception){
+                throw new Exception("An unexpected error occurred!!" + exception);
+            }
+            finally{
+                Console.WriteLine("Student Inserted Successfully!!");
             }
         }
 
@@ -102,10 +122,18 @@ namespace ConsoleApp.Services
 
             try{
                 var dataset = _executeStroedProcedure.CallStoredProcedure("ConsoleApp.delete_one_student", parameter);
-                Console.WriteLine("Student Deleted Successfully!!");
+                if(dataset.Tables.Count <= 0){
+                    Console.WriteLine("No recoreds Deleted!!");
+                }
             }
-            catch(System.Exception){
-                throw;
+            catch(SqlException sqlex){
+                throw new Exception("Something wrong with the SQL connection!!" + sqlex);
+            }
+            catch(Exception exception){
+                throw new Exception("An unexpected error occurred!!" + exception);
+            }
+            finally{
+                Console.WriteLine("Student Deleted Successfully!!");
             }
         }
     }
